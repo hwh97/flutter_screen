@@ -31,11 +31,13 @@ public class ScreenPlugin implements MethodCallHandler {
         result.success(getBrightness());
         break;
       case "setBrightness":
-        double brightness = call.argument("brightness");
-        WindowManager.LayoutParams layoutParams = _registrar.activity().getWindow().getAttributes();
-        layoutParams.screenBrightness = (float)brightness;
-        _registrar.activity().getWindow().setAttributes(layoutParams);
-        result.success(null);
+        if (call.argument("brightness") != null) {
+			double brightness = call.argument("brightness");
+			WindowManager.LayoutParams layoutParams = _registrar.activity().getWindow().getAttributes();
+			layoutParams.screenBrightness = (float)brightness;
+			_registrar.activity().getWindow().setAttributes(layoutParams);
+		}
+		result.success(null);
         break;
       case "isKeptOn":
         int flags = _registrar.activity().getWindow().getAttributes().flags;
