@@ -14,8 +14,10 @@
     result([NSNumber numberWithFloat:[UIScreen mainScreen].brightness]);
   }
   else if ([@"setBrightness" isEqualToString:call.method]) {
-    NSNumber *brightness = call.arguments[@"brightness"];
-    [[UIScreen mainScreen] setBrightness:brightness.floatValue];
+   if (call.arguments[@"brightness"] != nil && call.arguments[@"brightness"] != [NSNull null]) {
+        NSNumber *brightness = call.arguments[@"brightness"];
+        [[UIScreen mainScreen] setBrightness:[brightness floatValue]];
+    }
     result(nil);
   }
   else if ([@"isKeptOn" isEqualToString:call.method]) {
