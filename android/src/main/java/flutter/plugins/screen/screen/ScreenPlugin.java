@@ -8,6 +8,7 @@ import io.flutter.plugin.common.MethodChannel.MethodCallHandler;
 import io.flutter.plugin.common.MethodChannel.Result;
 import io.flutter.plugin.common.MethodCall;
 import io.flutter.plugin.common.PluginRegistry.Registrar;
+import android.view.WindowManager;
 
 /**
  * ScreenPlugin
@@ -55,7 +56,11 @@ public class ScreenPlugin implements MethodCallHandler {
         }
         result.success(null);
         break;
-
+      case "resetBrightness":
+        WindowManager.LayoutParams layoutParams = _registrar.activity().getWindow().getAttributes();
+        layoutParams.screenBrightness =  WindowManager.LayoutParams.BRIGHTNESS_OVERRIDE_NONE;
+        _registrar.activity().getWindow().setAttributes(layoutParams);
+        break;
       default:
         result.notImplemented();
         break;
